@@ -455,7 +455,18 @@ const UpcomingEvents = () => {
                     type="tel"
                     className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-card focus:outline-none focus:ring-2 focus:ring-primary/50"
                     placeholder="Enter your mobile number"
-                    {...register("phone", { required: "Phone number is required" })}
+                    maxLength={10}
+                    {...register("phone", { 
+                      required: "Phone number is required",
+                      pattern: {
+                        value: /^[0-9]{10}$/,
+                        message: "Phone number must be exactly 10 digits"
+                      }
+                    })}
+                    onInput={(e) => {
+                      const target = e.target as HTMLInputElement;
+                      target.value = target.value.replace(/[^0-9]/g, '');
+                    }}
                   />
                   {errors.phone && (
                     <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
@@ -473,6 +484,10 @@ const UpcomingEvents = () => {
                     {...register("rollNumber", { 
                       required: "Roll Number is required"
                     })}
+                    onInput={(e) => {
+                      const target = e.target as HTMLInputElement;
+                      target.value = target.value.toUpperCase();
+                    }}
                   />
                   {errors.rollNumber && (
                     <p className="text-red-500 text-sm mt-1">{errors.rollNumber.message}</p>
@@ -647,7 +662,7 @@ const UpcomingEvents = () => {
               <div className="flex items-center">
                 <Check className="w-5 h-5 mr-2" />
                 <span className="font-medium">
-                  🎉 Thank you for registering! Your payment is confirmed. Welcome to E-Cell SMEC!
+                  ✅ Registration successful! You will receive a confirmation email about the event from our side.
                 </span>
               </div>
               <button
