@@ -454,7 +454,7 @@ const UpcomingEvents = () => {
                   <input
                     type="tel"
                     className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-card focus:outline-none focus:ring-2 focus:ring-primary/50"
-                    placeholder="+91 9876543210"
+                    placeholder="Enter your mobile number"
                     {...register("phone", { required: "Phone number is required" })}
                   />
                   {errors.phone && (
