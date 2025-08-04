@@ -327,26 +327,28 @@ const UpcomingEvents = () => {
               }`}
               style={{ transitionDelay: `${400 + index * 100}ms` }}
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center">
-                  <div className="text-primary mr-3">
-                    {event.icon}
+              <div className="mb-4">
+                <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-center min-w-0 flex-1">
+                    <div className="text-primary mr-3 flex-shrink-0">
+                      {event.icon}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-lg font-bold text-foreground truncate">{event.month}</h3>
+                      <p className="text-sm text-primary font-medium truncate">"{event.theme}"</p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="text-lg font-bold text-foreground">{event.month}</h3>
-                    <p className="text-sm text-primary font-medium">"{event.theme}"</p>
+                  <div className="ml-3 flex-shrink-0">
+                    {index === 0 ? (
+                      <span className="px-2 sm:px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium whitespace-nowrap">
+                        Ongoing
+                      </span>
+                    ) : (
+                      <span className="px-2 sm:px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium whitespace-nowrap">
+                        Coming Soon
+                      </span>
+                    )}
                   </div>
-                </div>
-                <div className="ml-2">
-                  {index === 0 ? (
-                    <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
-                      Ongoing
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">
-                      Coming Soon
-                    </span>
-                  )}
                 </div>
               </div>
               
