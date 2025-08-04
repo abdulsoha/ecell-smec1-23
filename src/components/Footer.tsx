@@ -62,7 +62,14 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <h3 className="text-2xl font-bold text-primary mb-4">E-Cell SMEC</h3>
+              <div className="flex items-center space-x-3 mb-4">
+                <img 
+                  src="/lovable-uploads/f344ed9a-e937-4b1d-b40e-185cf3f9437d.png" 
+                  alt="E-Cell SMEC Logo" 
+                  className="w-8 h-8"
+                />
+                <h3 className="text-2xl font-bold text-primary">E-Cell SMEC</h3>
+              </div>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 Entrepreneurship Cell, St. Martin's Engineering College - Fostering innovation and nurturing 
                 the next generation of entrepreneurs through cutting-edge resources, 
