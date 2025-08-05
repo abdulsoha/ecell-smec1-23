@@ -29,12 +29,43 @@ const UpcomingEvents = () => {
   const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
   const sectionRef = useRef<HTMLDivElement>(null);
-  const { register, handleSubmit, formState: { errors, isValid }, reset, watch } = useForm<RegistrationFormData>({
+  const { register, handleSubmit, formState: { errors, isValid }, reset, watch, setValue } = useForm<RegistrationFormData>({
     mode: 'onChange'
   });
 
   // Watch all form fields to enable payment section when form is complete
   const watchAllFields = watch();
+  const rollNumber = watch("rollNumber");
+
+  // Auto-detect department based on roll number
+  useEffect(() => {
+    if (rollNumber) {
+      const match = rollNumber.match(/^A(\d{2})/i);
+      if (match) {
+        const digits = match[1];
+        const departmentMap: Record<string, string> = {
+          '05': 'CSE',
+          '72': 'AI & DS',
+          '66': 'CSM',
+          '12': 'IT',
+          '73': 'AI & ML',
+          '04': 'ECE',
+          '02': 'EEE'
+        };
+        
+        const detectedDepartment = departmentMap[digits];
+        if (detectedDepartment) {
+          setValue("department", detectedDepartment);
+        } else {
+          setValue("department", "");
+        }
+      } else {
+        setValue("department", "");
+      }
+    } else {
+      setValue("department", "");
+    }
+  }, [rollNumber, setValue]);
 
   const toggleEvent = (index: number) => {
     setExpandedEvents(prev => 
@@ -520,25 +551,21 @@ const UpcomingEvents = () => {
                 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
-                    Select Your Department
+                    Department (Auto-detected)
                   </label>
-                  <select
-                    className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-card focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-muted text-muted-foreground focus:outline-none cursor-not-allowed"
+                    placeholder="Enter roll number to auto-detect department"
+                    readOnly
                     {...register("department", { required: "Department is required" })}
-                  >
-                    <option value="">Select your department</option>
-                    <option value="CSE">CSE</option>
-                    <option value="IT">IT</option>
-                    <option value="CSM">CSM</option>
-                    <option value="ECE">ECE</option>
-                    <option value="EEE">EEE</option>
-                    <option value="AI & DS">AI & DS</option>
-                    <option value="AI & ML">AI & ML</option>
-                    <option value="CSG">CSG</option>
-                  </select>
+                  />
                   {errors.department && (
                     <p className="text-red-500 text-sm mt-1">{errors.department.message}</p>
                   )}
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Department is automatically detected from your roll number (A05=CSE, A72=AI&DS, A66=CSM, A12=IT, A73=AI&ML, A04=ECE, A02=EEE)
+                  </p>
                 </div>
 
                 {/* Payment Section - Only shown when form is complete */}
