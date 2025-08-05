@@ -38,33 +38,27 @@ const UpcomingEvents = () => {
   const watchAllFields = watch();
   const rollNumber = watch("rollNumber");
 
-  // Auto-detect department based on roll number
+  // Auto-detect department based on roll number using characters at index 6 and 7
   useEffect(() => {
-    if (rollNumber) {
-      const match = rollNumber.match(/^A(\d{2})/i);
-      if (match) {
-        const digits = match[1];
-        const departmentMap: Record<string, string> = {
-          '05': 'CSE',
-          '72': 'AI & DS',
-          '66': 'CSM',
-          '12': 'IT',
-          '73': 'AI & ML',
-          '04': 'ECE',
-          '02': 'EEE'
-        };
-        
-        const detectedDepartment = departmentMap[digits];
-        if (detectedDepartment) {
-          setValue("department", detectedDepartment);
-          setDepartmentError("");
-        } else {
-          setValue("department", "");
-          setDepartmentError("Invalid department code in Roll Number. Please check and enter a valid Roll Number.");
-        }
+    if (rollNumber && rollNumber.length >= 8) {
+      const digits = rollNumber.slice(6, 8);
+      const departmentMap: Record<string, string> = {
+        '05': 'CSE',
+        '72': 'AI & DS',
+        '66': 'CSM',
+        '12': 'IT',
+        '73': 'AI & ML',
+        '04': 'ECE',
+        '02': 'EEE'
+      };
+      
+      const detectedDepartment = departmentMap[digits];
+      if (detectedDepartment) {
+        setValue("department", detectedDepartment);
+        setDepartmentError("");
       } else {
         setValue("department", "");
-        setDepartmentError("");
+        setDepartmentError("Invalid department code in Roll Number. Please verify your Roll Number.");
       }
     } else {
       setValue("department", "");
