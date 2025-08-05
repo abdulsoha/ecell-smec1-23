@@ -28,6 +28,7 @@ const UpcomingEvents = () => {
   const [qrCodeUrl, setQrCodeUrl] = useState<string>("");
   const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false);
   const [showThankYou, setShowThankYou] = useState(false);
+  const [departmentError, setDepartmentError] = useState("");
   const sectionRef = useRef<HTMLDivElement>(null);
   const { register, handleSubmit, formState: { errors, isValid }, reset, watch, setValue } = useForm<RegistrationFormData>({
     mode: 'onChange'
@@ -56,14 +57,18 @@ const UpcomingEvents = () => {
         const detectedDepartment = departmentMap[digits];
         if (detectedDepartment) {
           setValue("department", detectedDepartment);
+          setDepartmentError("");
         } else {
           setValue("department", "");
+          setDepartmentError("Invalid department code in Roll Number. Please check and enter a valid Roll Number.");
         }
       } else {
         setValue("department", "");
+        setDepartmentError("");
       }
     } else {
       setValue("department", "");
+      setDepartmentError("");
     }
   }, [rollNumber, setValue]);
 
@@ -562,6 +567,9 @@ const UpcomingEvents = () => {
                   />
                   {errors.department && (
                     <p className="text-red-500 text-sm mt-1">{errors.department.message}</p>
+                  )}
+                  {departmentError && (
+                    <p className="text-red-500 text-sm mt-1">{departmentError}</p>
                   )}
                   <p className="text-xs text-muted-foreground mt-1">
                     Department is automatically detected from your roll number (A05=CSE, A72=AI&DS, A66=CSM, A12=IT, A73=AI&ML, A04=ECE, A02=EEE)
