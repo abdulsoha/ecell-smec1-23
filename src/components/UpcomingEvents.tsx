@@ -14,6 +14,7 @@ interface RegistrationFormData {
   phone: string;
   rollNumber: string;
   year: string;
+  department: string;
 }
 
 const UpcomingEvents = () => {
@@ -60,6 +61,7 @@ const UpcomingEvents = () => {
         phone: data.phone,
         roll_number: data.rollNumber,
         year: data.year,
+        department: data.department,
         event_name: selectedEvent,
         payment_status: 'pending'
       });
@@ -159,7 +161,8 @@ const UpcomingEvents = () => {
     watchAllFields.email && 
     watchAllFields.phone && 
     watchAllFields.rollNumber && 
-    watchAllFields.year;
+    watchAllFields.year &&
+    watchAllFields.department;
 
   // Show payment section when form is complete
   useEffect(() => {
@@ -512,6 +515,29 @@ const UpcomingEvents = () => {
                   </select>
                   {errors.year && (
                     <p className="text-red-500 text-sm mt-1">{errors.year.message}</p>
+                  )}
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-2">
+                    Select Your Department
+                  </label>
+                  <select
+                    className="w-full px-3 py-2 rounded-lg border border-primary/20 bg-card focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    {...register("department", { required: "Department is required" })}
+                  >
+                    <option value="">Select your department</option>
+                    <option value="CSE">CSE</option>
+                    <option value="IT">IT</option>
+                    <option value="CSM">CSM</option>
+                    <option value="ECE">ECE</option>
+                    <option value="EEE">EEE</option>
+                    <option value="AI & DS">AI & DS</option>
+                    <option value="AI & ML">AI & ML</option>
+                    <option value="CSG">CSG</option>
+                  </select>
+                  {errors.department && (
+                    <p className="text-red-500 text-sm mt-1">{errors.department.message}</p>
                   )}
                 </div>
 

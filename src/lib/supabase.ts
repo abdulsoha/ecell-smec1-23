@@ -13,6 +13,7 @@ export interface RegistrationData {
   phone: string;
   roll_number: string;
   year: string;
+  department: string;
   event_name: string;
   payment_status: 'pending' | 'completed' | 'failed';
   created_at?: string;
